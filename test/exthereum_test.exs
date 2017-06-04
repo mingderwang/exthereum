@@ -4,7 +4,17 @@ defmodule ExthereumTest do
   test "EVM Tests" do
     {:ok, body} = File.read("test/tests/VMTests/vmArithmeticTest.json")
     tests = Poison.decode!(body)
-    {_, state} = EVM.run(tests["add0"]["env"], tests["add0"]["pre"], tests["add0"]["exec"])
-    assert state == tests["add0"]["post"]
+    state = tests["add0"]["env"]
+      |> Map.merge(tests["add0"]["exec"])
+      |> Map.merge(%{addresses: tests["add0"]["pre"]})
+
+
+    code = tests["add0"]["exec"]["code"]
+      |> String.slice(2..-1)
+      |> Base.decode16!(case: :mixed)
+
+
+    state = EVM.run(state, code)
+    assert state[:addresses] == tests["add0"]["post"]
   end
 end
