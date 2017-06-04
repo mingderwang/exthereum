@@ -1,9 +1,11 @@
 Code.require_file("src/stack.exs")
+Code.require_file("src/log.exs")
 Code.require_file("src/storage.exs")
+Code.require_file("src/opcodes.exs")
+Code.require_file("src/utils.exs")
 
 defmodule EVM do
-  @push1_opcode 0x5f
-
+  use Opcodes
 
   def run(state, code) do
     step(state, code, [], 0)
@@ -13,13 +15,13 @@ defmodule EVM do
     opcode = :binary.at(code, program_counter)
 
     storage = state[:accounts]
-      |> Storage.step(stack, opcode, state["address"])
-    state = state
-      |> put_in([:accounts], storage)
-
+      |> Storage.step(stack, opcode)
     stack = stack
       |> Stack.step(code, program_counter, opcode)
+    Log.step(code, program_counter, opcode)
 
+    state = state
+      |> put_in([:accounts, state["address"], "storage"], storage)
 
     if program_counter + 1 < byte_size(code) do
       program_counter = next_instruction(program_counter, code, opcode)
@@ -31,9 +33,9 @@ defmodule EVM do
 
   def next_instruction(program_counter, code, opcode) do
     cond do
-      opcode in @push1_opcode..@push1_opcode + 32 ->
-        size = opcode - @push1_opcode
-        program_counter + size
+      is_push_opcode(opcode) ->
+        size = opcode - atom_to_opcode(:push1)
+        program_counter + size + 1
       program_counter < byte_size(code) ->
         program_counter + 1
     end

@@ -1,19 +1,16 @@
-defmodule Storage do
-  use Bitwise
+Code.require_file("src/opcodes.exs")
 
-  def step(accounts, stack, opcode, address) do
-    case opcode do
-      0x55 ->
+defmodule Storage do
+  use Utils
+  use Opcodes
+
+  def step(accounts, stack, opcode) do
+    case @opcodes[opcode] do
+      :sstore ->
         [register | [value | _]] = stack
-        storage = %{encode(register) => encode(value)}
-        put_in(accounts, [address, "storage"], storage)
+        %{encode(register) => encode(value)}
       _->
         accounts
     end
   end
-
-  def encode(value) do
-    "0x" <> (value |> :binary.encode_unsigned |> Base.encode16 |> String.downcase)
-  end
-
 end
