@@ -16,16 +16,17 @@ defmodule ExthereumTest do
     tests = Poison.decode!(body)
     for test <- @passing_tests do
       IO.puts "-----" <> test <> "-----"
-      state = tests[test]["env"]
-        |> Map.merge(tests[test]["exec"])
-        |> Map.merge(%{accounts: tests[test]["pre"]})
-
-
+      state = %{
+          gas: hex_to_int(tests[test]["exec"]["gas"]),
+          from: tests[test]["exec"]["address"],
+          accounts: tests[test]["pre"]
+        }
       code = hex_to_binary(tests[test]["exec"]["code"])
 
 
       state = EVM.run(state, code)
-      assert state[:gas] == hex_to_int(tests[test]["exec"]["gas"]) - hex_to_int(tests[test]["gas"])
+
+      assert state[:gas] == hex_to_int(tests[test]["gas"])
       assert state[:accounts] == tests[test]["post"]
     end
   end

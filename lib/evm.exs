@@ -14,10 +14,6 @@ defmodule EVM do
   use EVM.Utils
 
   def run(state, code) do
-    state = state
-      |> Map.merge(%{
-        gas: 0,
-      })
     step(state, code, [], 0)
   end
 
@@ -25,11 +21,11 @@ defmodule EVM do
     opcode = :binary.at(code, program_counter)
 
     stack = Stack.step(stack, code, program_counter, opcode)
-    storage = state[:accounts][state["address"]]["storage"]
-    state = update_in(state[:gas], &(&1 + Gas.price(stack, storage, opcode)))
+    storage = state[:accounts][state[:from]]["storage"]
+    state = update_in(state[:gas], &(&1 - Gas.price(stack, storage, opcode)))
     state = update_in(
       state,
-      [:accounts, state["address"], "storage"],
+      [:accounts, state[:from], "storage"],
       &Storage.step(&1, stack, opcode)
     )
     Log.step(code, program_counter, opcode)
