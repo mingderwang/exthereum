@@ -4,13 +4,18 @@ defmodule ExthereumTest do
   use Test.Utils
 
   @passing_tests [
-    "add0"
+    "add0",
+    "add1",
+    "add2",
+    "add3",
+    "add4",
   ]
 
   test "vmArithmeticTests" do
     {:ok, body} = File.read("test/tests/VMTests/vmArithmeticTest.json")
     tests = Poison.decode!(body)
     for test <- @passing_tests do
+      IO.puts "-----" <> test <> "-----"
       state = tests[test]["env"]
         |> Map.merge(tests[test]["exec"])
         |> Map.merge(%{accounts: tests[test]["pre"]})

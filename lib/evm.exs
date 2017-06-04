@@ -11,7 +11,6 @@ defmodule EVM do
   alias EVM.Storage
   alias EVM.Gas
   use EVM.Opcodes
-  use EVM.GasPrices
   use EVM.Utils
 
   def run(state, code) do

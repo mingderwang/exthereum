@@ -1,34 +1,38 @@
-Code.require_file("lib/evm/utils.exs")
-Code.require_file("lib/evm/gas_prices.exs")
-
 defmodule EVM.Gas do
-  use EVM.Utils
   use EVM.Opcodes
-  @gas_prices %{
+  @static_gas_prices %{
     add: 3,
     push1: 3,
     push32: 3,
-    sstore: 20000,
+  }
+  @dynamic_gas_prices %{
+    sstore_empty: 5000,
+    sstore_replace: 5000,
+    sstore_new: 20000,
   }
 
   def price(stack, storage, opcode) do
     cond do
       opcode == atom_to_opcode(:sstore) ->
         sstore_price(stack, storage)
-      @gas_prices[@opcodes[opcode]] ->
-        @gas_prices[@opcodes[opcode]]
+      @static_gas_prices[@opcodes[opcode]] ->
+        @static_gas_prices[@opcodes[opcode]]
       true ->
         0
     end
   end
 
   def sstore_price(stack, storage) do
-    [address | _] = stack
+    {:ok, address} = Enum.fetch(stack, 0)
+    {:ok, value} = Enum.fetch(stack, 1)
 
-    if storage[address] do
-      5000
-    else
-      20000
+    cond do
+      value == 0 ->
+        @dynamic_gas_prices[:sstore_empty]
+      storage[address] ->
+        @dynamic_gas_prices[:sstore_replace]
+      true ->
+        @dynamic_gas_prices[:sstore_new]
     end
   end
 end
