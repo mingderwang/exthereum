@@ -1,20 +1,27 @@
+Code.require_file("test/utils.exs")
 defmodule ExthereumTest do
   use ExUnit.Case, async: true
+  use Test.Utils
 
-  test "EVM Tests" do
+  @passing_tests [
+    "add0"
+  ]
+
+  test "vmArithmeticTests" do
     {:ok, body} = File.read("test/tests/VMTests/vmArithmeticTest.json")
     tests = Poison.decode!(body)
-    state = tests["add0"]["env"]
-      |> Map.merge(tests["add0"]["exec"])
-      |> Map.merge(%{accounts: tests["add0"]["pre"]})
+    for test <- @passing_tests do
+      state = tests[test]["env"]
+        |> Map.merge(tests[test]["exec"])
+        |> Map.merge(%{accounts: tests[test]["pre"]})
 
 
-    code = tests["add0"]["exec"]["code"]
-      |> String.slice(2..-1)
-      |> Base.decode16!(case: :mixed)
+      code = hex_to_binary(tests[test]["exec"]["code"])
 
 
-    state = EVM.run(state, code)
-    assert state[:accounts] == tests["add0"]["post"]
+      state = EVM.run(state, code)
+      assert state[:gas] == hex_to_int(tests[test]["exec"]["gas"]) - hex_to_int(tests[test]["gas"])
+      assert state[:accounts] == tests[test]["post"]
+    end
   end
 end
