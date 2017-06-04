@@ -6,7 +6,7 @@ defmodule ExthereumTest do
     tests = Poison.decode!(body)
     state = tests["add0"]["env"]
       |> Map.merge(tests["add0"]["exec"])
-      |> Map.merge(%{addresses: tests["add0"]["pre"]})
+      |> Map.merge(%{accounts: tests["add0"]["pre"]})
 
 
     code = tests["add0"]["exec"]["code"]
@@ -15,6 +15,6 @@ defmodule ExthereumTest do
 
 
     state = EVM.run(state, code)
-    assert state[:addresses] == tests["add0"]["post"]
+    assert state[:accounts] == tests["add0"]["post"]
   end
 end
