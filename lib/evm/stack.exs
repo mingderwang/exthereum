@@ -1,10 +1,9 @@
-Code.require_file("src/utils.exs")
-Code.require_file("src/opcodes.exs")
+Code.require_file("lib/evm/utils.exs")
+Code.require_file("lib/evm/opcodes.exs")
 
-defmodule Stack do
-  use Bitwise
-  use Utils
-  use Opcodes
+defmodule EVM.Stack do
+  use EVM.Utils
+  use EVM.Opcodes
 
   def step(stack, code, program_counter, opcode) do
     if is_push_opcode(opcode) do

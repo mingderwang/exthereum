@@ -1,2 +1,2 @@
 ExUnit.start()
-Code.require_file("src/evm.exs")
+Code.require_file("lib/evm.exs")

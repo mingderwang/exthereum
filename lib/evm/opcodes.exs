@@ -1,11 +1,11 @@
-defmodule Opcodes do
+defmodule EVM.Opcodes do
   defmacro __using__(_opts) do
     quote do
-      @push_opcodes 0x5f..0x7f
+      @push_opcodes 0x60..0x7f
       @opcodes %{
         0x01 => :add,
         0x55 => :sstore,
-        0x5f => :push1,
+        0x60 => :push1,
         0x7f => :push32,
       }
 

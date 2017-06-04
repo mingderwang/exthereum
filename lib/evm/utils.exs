@@ -1,13 +1,17 @@
-defmodule Utils do
+defmodule EVM.Utils do
   use Bitwise
 
   defmacro __using__(_opts) do
     quote do
       def value_at(code, program_counter, opcode) do
-        size = opcode - atom_to_opcode(:push1)
+        size = size_of_push(opcode)
         code
           |> Kernel.binary_part(program_counter + 1, size)
           |> :binary.decode_unsigned
+      end
+
+      def size_of_push(opcode) do
+        opcode - (atom_to_opcode(:push1) - 1)
       end
 
       def encode(value) do
