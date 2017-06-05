@@ -1,6 +1,3 @@
-Code.require_file("lib/evm/utils.exs")
-Code.require_file("lib/evm/opcodes.exs")
-
 defmodule EVM.Stack do
   use EVM.Utils
   use EVM.Opcodes

@@ -1,6 +1,3 @@
-Code.require_file("lib/evm/opcodes.exs")
-Code.require_file("lib/evm/utils.exs")
-
 defmodule EVM.Log do
   use EVM.Opcodes
   use EVM.Utils

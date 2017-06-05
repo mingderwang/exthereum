@@ -1,10 +1,3 @@
-Code.require_file("lib/evm/stack.exs")
-Code.require_file("lib/evm/log.exs")
-Code.require_file("lib/evm/storage.exs")
-Code.require_file("lib/evm/opcodes.exs")
-Code.require_file("lib/evm/utils.exs")
-Code.require_file("lib/evm/gas.exs")
-
 defmodule EVM do
   alias EVM.Stack
   alias EVM.Log

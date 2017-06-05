@@ -1,5 +1,3 @@
-Code.require_file("lib/evm/opcodes.exs")
-
 defmodule EVM.Storage do
   use EVM.Utils
   use EVM.Opcodes

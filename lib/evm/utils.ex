@@ -26,7 +26,13 @@ defmodule EVM.Utils do
       end
 
       def encode(value) do
-        "0x" <> (value |> :binary.encode_unsigned |> Base.encode16 |> String.downcase)
+        encoded_value =
+          value
+          |> :binary.encode_unsigned
+          |> Base.encode16
+          |> String.downcase
+
+        "0x" <> encoded_value
       end
 
       def pretty_encode(value) do

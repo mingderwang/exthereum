@@ -7,9 +7,9 @@ defmodule EVM.Gas do
     push32: 3,
   }
   @dynamic_gas_prices %{
-    sstore_empty: 5000,
-    sstore_replace: 5000,
-    sstore_new: 20000,
+    sstore_empty: 5_000,
+    sstore_replace: 5_000,
+    sstore_new: 20_000,
   }
 
   def price(stack, storage, opcode) do

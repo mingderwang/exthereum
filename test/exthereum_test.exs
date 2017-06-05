@@ -1,4 +1,3 @@
-Code.require_file("test/utils.exs")
 defmodule ExthereumTest do
   use ExUnit.Case, async: true
   use Test.Utils
