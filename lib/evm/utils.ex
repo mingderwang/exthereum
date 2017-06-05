@@ -36,11 +36,11 @@ defmodule EVM.Utils do
       end
 
       def pretty_encode(value) do
-        encode(value) <> " (" <> Integer.to_string(value) <>")"
+        encode(value) <> " (" <> Integer.to_string(value) <> ")"
       end
 
       def wrap(value) do
-        band(value, (:math.pow(2, 256)|> round) - 1)
+        band(value, (round(:math.pow(2, 256)) - 1))
       end
     end
   end

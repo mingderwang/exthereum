@@ -12,7 +12,7 @@ defmodule EVM.Storage do
           storage
             |> Map.merge(%{encode(register) => encode(value)})
         end
-      _->
+      _ ->
         storage
     end
   end
