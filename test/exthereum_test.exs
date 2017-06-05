@@ -9,6 +9,7 @@ defmodule ExthereumTest do
     "add2",
     "add3",
     "add4",
+    "addmod0"
   ]
 
   test "vmArithmeticTests" do
@@ -26,8 +27,8 @@ defmodule ExthereumTest do
 
       state = EVM.run(state, code)
 
-      assert state[:gas] == hex_to_int(tests[test]["gas"])
       assert state[:accounts] == tests[test]["post"]
+      assert state[:gas] == hex_to_int(tests[test]["gas"])
     end
   end
 end

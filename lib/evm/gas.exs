@@ -2,6 +2,7 @@ defmodule EVM.Gas do
   use EVM.Opcodes
   @static_gas_prices %{
     add: 3,
+    addmod: 8,
     push1: 3,
     push32: 3,
   }

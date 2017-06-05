@@ -5,8 +5,12 @@ defmodule EVM.Log do
   use EVM.Opcodes
   use EVM.Utils
 
-  def step(code, program_counter, opcode) do
+  def step(stack, code, program_counter, opcode) do
     log_opcode(opcode)
+
+    if atom_to_opcode(:sstore) == opcode do
+      log_store_value(stack)
+    end
 
     if is_push_opcode(opcode) do
       log_push_value(code, program_counter, opcode)
@@ -19,9 +23,14 @@ defmodule EVM.Log do
       |> String.upcase
   end
 
+  def log_store_value(stack) do
+    {value, _} = stack_pop(stack)
+    log "VALUE: " <> pretty_encode(value)
+  end
+
   def log_push_value(code, program_counter, opcode) do
     value = value_at(code, program_counter, opcode)
-    log "VALUE: " <> encode(value)
+    log "VALUE: " <> pretty_encode(value)
   end
 
   def log(value) do

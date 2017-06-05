@@ -11,8 +11,14 @@ defmodule EVM.Stack do
     else
       case @opcodes[opcode] do
         :add ->
-          [left | [right | stack]] = stack
-          [wrap(left + right) | stack]
+          {left, stack} = stack_pop(stack)
+          {right, stack} = stack_pop(stack)
+          stack_push(stack, wrap(left + right))
+        :addmod ->
+          {left, stack} = stack_pop(stack)
+          {right, stack} = stack_pop(stack)
+          {mod, stack} = stack_pop(stack)
+          stack_push(stack, rem((left + right), mod))
         _->
           stack
       end

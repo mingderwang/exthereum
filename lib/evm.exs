@@ -28,7 +28,7 @@ defmodule EVM do
       [:accounts, state[:from], "storage"],
       &Storage.step(&1, stack, opcode)
     )
-    Log.step(code, program_counter, opcode)
+    Log.step(stack, code, program_counter, opcode)
 
     if program_counter + 1 < byte_size(code) do
       step(
