@@ -1,5 +1,3 @@
-Code.require_file("lib/evm/opcodes.exs")
-
 defmodule EVM.Storage do
   use EVM.Utils
   use EVM.Opcodes
@@ -14,7 +12,7 @@ defmodule EVM.Storage do
           storage
             |> Map.merge(%{encode(register) => encode(value)})
         end
-      _->
+      _ ->
         storage
     end
   end

@@ -26,15 +26,21 @@ defmodule EVM.Utils do
       end
 
       def encode(value) do
-        "0x" <> (value |> :binary.encode_unsigned |> Base.encode16 |> String.downcase)
+        encoded_value =
+          value
+          |> :binary.encode_unsigned
+          |> Base.encode16
+          |> String.downcase
+
+        "0x" <> encoded_value
       end
 
       def pretty_encode(value) do
-        encode(value) <> " (" <> Integer.to_string(value) <>")"
+        encode(value) <> " (" <> Integer.to_string(value) <> ")"
       end
 
       def wrap(value) do
-        band(value, (:math.pow(2, 256)|> round) - 1)
+        band(value, (round(:math.pow(2, 256)) - 1))
       end
     end
   end
