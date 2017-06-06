@@ -1,8 +1,8 @@
 # credo:disable-for-this-file Credo.Check.Refactor.CyclomaticComplexity
 
-defmodule EVM.Stack do
-  use EVM.Utils
-  use EVM.Opcodes
+defmodule Exthereum.EVM.Stack do
+  use Exthereum.EVM.Utils
+  use Exthereum.EVM.Opcodes
 
   def step(stack, code, program_counter, opcode) do
     if is_push_opcode(opcode) do

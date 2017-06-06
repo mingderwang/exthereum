@@ -1,5 +1,6 @@
-defmodule EVM.Gas do
-  use EVM.Opcodes
+defmodule Exthereum.EVM.Gas do
+  use Exthereum.EVM.Opcodes
+
   @static_gas_prices %{
     add: 3,
     sub: 3,

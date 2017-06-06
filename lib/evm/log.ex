@@ -1,6 +1,6 @@
-defmodule EVM.Log do
-  use EVM.Opcodes
-  use EVM.Utils
+defmodule Exthereum.EVM.Log do
+  use Exthereum.EVM.Opcodes
+  use Exthereum.EVM.Utils
 
   def step(stack, code, program_counter, opcode) do
     log_opcode(opcode)

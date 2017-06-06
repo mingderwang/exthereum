@@ -39,7 +39,7 @@ defmodule ExthereumTest do
       code = hex_to_binary(tests[test]["exec"]["code"])
 
 
-      state = EVM.run(state, code)
+      state = Exthereum.EVM.run(state, code)
 
       assert state[:accounts] == tests[test]["post"]
       assert state[:gas] == hex_to_int(tests[test]["gas"])

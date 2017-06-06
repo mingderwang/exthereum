@@ -1,4 +1,4 @@
-defmodule EVM.Opcodes do
+defmodule Exthereum.EVM.Opcodes do
   defmacro __using__(_opts) do
     quote do
       @push_opcodes 0x60..0x7f

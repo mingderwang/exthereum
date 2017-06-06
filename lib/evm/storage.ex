@@ -1,6 +1,6 @@
-defmodule EVM.Storage do
-  use EVM.Utils
-  use EVM.Opcodes
+defmodule Exthereum.EVM.Storage do
+  use Exthereum.EVM.Utils
+  use Exthereum.EVM.Opcodes
 
   def step(storage, stack, opcode) do
     case @opcodes[opcode] do

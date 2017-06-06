@@ -1,10 +1,10 @@
-defmodule EVM do
-  alias EVM.Stack
-  alias EVM.Log
-  alias EVM.Storage
-  alias EVM.Gas
-  use EVM.Opcodes
-  use EVM.Utils
+defmodule Exthereum.EVM do
+  alias Exthereum.EVM.Stack
+  alias Exthereum.EVM.Log
+  alias Exthereum.EVM.Storage
+  alias Exthereum.EVM.Gas
+  use Exthereum.EVM.Opcodes
+  use Exthereum.EVM.Utils
 
   def run(state, code) do
     step(state, code, [], 0)

@@ -1,4 +1,4 @@
-defmodule EVM.Utils do
+defmodule Exthereum.EVM.Utils do
   use Bitwise
 
   defmacro __using__(_opts) do
