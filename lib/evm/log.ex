@@ -15,9 +15,11 @@ defmodule EVM.Log do
   end
 
   def log_opcode(opcode) do
-    log @opcodes[opcode]
+    opcode_string = @opcodes[opcode]
       |> Atom.to_string
       |> String.upcase
+
+    log(opcode_string <> " - " <> pretty_encode(opcode))
   end
 
   def log_store_value(stack) do

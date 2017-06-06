@@ -8,7 +8,22 @@ defmodule ExthereumTest do
     "add2",
     "add3",
     "add4",
-    "addmod0"
+    "addmod0",
+    "addmod1",
+    "addmod1_overflow2",
+    "addmod1_overflow3",
+    "addmod1_overflow4",
+    "addmod1_overflowDiff",
+    "addmod2",
+    "addmod2_0",
+    "addmod2_1",
+    "addmod3",
+    "addmod3_0",
+    "addmodBigIntCast",
+    "addmodDivByZero",
+    "addmodDivByZero1",
+    "addmodDivByZero2",
+    "addmodDivByZero3",
   ]
 
   test "vmArithmeticTests" do
