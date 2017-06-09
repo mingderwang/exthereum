@@ -1,14 +1,13 @@
 defmodule Exthereum.RLP do
-  def encode(<< code_point :: utf8 >> = item)
-      when byte_size(item) == 1
-      when code_point < 128 do
+  def encode(item)
+      when is_binary(item) and byte_size(item) == 1 do
     item
   end
 
-  def encode(item) when byte_size(item) < 56 do
-    prefix_codepoint = 128 + byte_size(item)
-    prefix = << prefix_codepoint :: utf8 >> |> IO.inspect
+  def encode(item)
+      when is_binary(item) and byte_size(item) < 56 do
+    prefix = 128 + byte_size(item)
 
-    prefix <> item
+    << prefix >> <> item
   end
 end
